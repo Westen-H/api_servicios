@@ -4,16 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Westen-H/api_servicios.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Westen-H/api_servicios/issues"
+  },
+  "homepage": "https://github.com/Westen-H/api_servicios#readme",
   "dependencies": {
-    "colors": "^1.4.0",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "serve-favicon": "^2.5.1"
+    "mongoose": "^9.0.0"
   }
 }
