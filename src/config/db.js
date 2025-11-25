@@ -11,7 +11,7 @@ const connectDB = async () => {
     try {
         // Intentar conectarse a MongoDB unsado la URI definida en las variables de entorno (archivo .env)(variable MONGO_URI)
         await mongoose.connect(process.env.MONGO_URI)
-        console.log('MongoDB se ha conectado satisfactoriamente')
+        console.log('🦇 Protocolo MongoDB conectado satisfactoriamente 🦇')
     } catch (error) {
         // Mensaje de error en consola, por si existe algun error y se detiene la ejecución del backend
         console.error('Error conectando a MongoDB:', error.message)

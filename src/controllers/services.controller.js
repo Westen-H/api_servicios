@@ -29,7 +29,7 @@ const Service = require('../models/service.model');
 
     // GET /api/v1/servicios
 // Devolver todos los servicios alamacenados en MongoDB
-const getAllService = async (req, res) => {
+const getAllServices = async (req, res) => {
     try {
         // Usar find()--> busca todos los documentos en la colección 2services" 
         const services = await Service.find()
@@ -52,7 +52,7 @@ const getServicesById = async (req, res) => {
         // Buscar el documento por su "ID"
         const service = await Service.findById(id)
 
-        // Si no existe un servicio con ese ID, responder con error 404 + msg
+        // Si no existe un servicio con ese ID, responder con status 404 + msg
         if (!service) {
             return res.status(404).json({ message: 'Servicio no encontrado' })
         };
@@ -79,7 +79,7 @@ const createService = async (req, res) => {
         // Responder con un satatus 201 "cread0" y el servicio recién creado EN json
         res.status(201).json(newService)
     } catch (error) {
-        // Si hay error de validación mandar status400 + msg
+        // Si hay error de validación mandar status 400 + msg
         console.error('Error creando servicio:', error.message)
         res.status(400).json({ message: 'Error creando servicio' })
     }
@@ -144,7 +144,7 @@ const deleteService = async (req, res) => {
 
 // Exportar los controladores para que puedan ser usados en las rutas 
 module.exports = {
-    getAllService,
+    getAllServices,
     getServicesById,
     createService,
     updateService,
