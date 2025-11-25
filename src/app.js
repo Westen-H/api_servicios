@@ -24,7 +24,7 @@ app.use(express.json())
 
 // Importar el módulo de rutas relacionadas con "service"
 const servicesRoutes = require('./routes/services.routes')
-const { connect } = require('http2')
+// const { connect } = require('http2')
 
 // Ruta raíz para comprobar que el servidor está funcionando correctamente
 app.get('/', (req, res) => {
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 })
 
 // Usar /services como prefijo: así que todas las rutas que comiencen con /services serán manejadas por Servicesroutes
-app.use('/services', servicesRoutes)
+app.use('/api/v1/servicios', servicesRoutes)
 
 // Encender el servidor y escuchando en el puerto indicado
 app.listen(PORT, () => {

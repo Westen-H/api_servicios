@@ -16,16 +16,16 @@
 const mongoose = require('mongoose')
 
 // Desestructurar Types de mongoose para tipos de datos 
-const { Schema, Type } = mongoose
+const { Schema } = mongoose
 
 // Definir un esquema para los servicios ("Service")
 const serviceSchema = new mongoose.Schema(
     { 
         // Nombre del servicio, (requerido/obligatorio))
-        nombre: {Type:String, required: true },
+        nombre: {type:String, required: true },
 
         // Precio del servicio, (requerido/obligatorio))
-        precio: { Type: Number, required: true },
+        precio: { type: Number, required: true },
 
         // Descripcion opcional del servicio
         descripcion: { type: String }

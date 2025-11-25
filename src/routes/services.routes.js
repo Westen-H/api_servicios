@@ -14,7 +14,9 @@ const router = express.Router()
 const { 
     getAllServices,
     getServicesById,
-    createService
+    createService, 
+    updateService,
+    deleteService
  } = require('../controllers/services.controller');
 
  /*
@@ -24,17 +26,25 @@ const {
   ======================================
 */
 
-// -> GET en /services
-// Obtner la lista completa de servicios
+// -> GET en /api/v1/services
+// Obtner la lista completa de servicios almacenados en la base de datos
 router.get('/', getAllServices);
 
-// -> GET /services/id
+// -> GET /api/v1/servicios/:id
 // Obtner un único servicio según el "ID" proporcionado en la URL
 router.get('/:id', getServicesById);
 
-// -> POST /services
+// -> POST /api/v1/services
 // Crear un nuevo servicio en la base de datos
 router.post('/', createService);
+
+// -> PUT /api/v1//servicios/:id
+// Actualizar un servicio existente según su ID
+router.put('/:id', updateService);
+
+// -> DELETE /api/v1//servicios/:id
+// elimina un servicio existente según su ID
+router.delete('/:id', deleteService);
 
 // Exportar el objeto router para que pueda ser utilizado en app.js
 module.exports = router
