@@ -1,4 +1,4 @@
-// ===== IMPORTACIONES
+    // ===== IMPORTACIONES ===== \\
  // Crear servidor HTTP importando Express
 const express = require('express') 
 
@@ -10,7 +10,7 @@ const dotenv = require('dotenv')
 const connectDB = require('./config/db') 
 
 
-// ===== CONFIGURACIÓN INICIAL
+    // ===== CONFIGURACIÓN INICIAL ===== \\
 // Cargar variable de entorno desde .env
 dotenv.config()
 
@@ -23,24 +23,24 @@ const app = express()
 const PORT = process.env.PORT || 3000  
 
 
-// ===== MIDDLEWARES
+    // ===== MIDDLEWARES ===== \\
 // Middleware que permite recibir y leer/analiza (parsea) el body de las peticiones con JSON y lo agrega en req.body
 app.use(express.json())
 
 // Importar el módulo de rutas relacionadas con "service"
 const servicesRoutes = require('./routes/services.routes')
 
-// =====  RUTAS
+    // =====  RUTAS ===== \\
 // Ruta raíz para comprobar que el servidor está funcionando correctamente
 app.get('/', (req, res) => {
   res.send('Servidor Backend funcionando')
 })
 
 // Usar /services como prefijo: así que todas las rutas que comiencen con /services serán manejadas por Servicesroutes
-app.use('/api/v1/servicios', servicesRoutes)
+app.use('/api/v1/services', servicesRoutes)
 
 
-// ===== INICIO DEL SERVIDOR
+    // ===== INICIO DEL SERVIDOR ===== \\
 // Encender el servidor y escuchando en el puerto indicado
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)

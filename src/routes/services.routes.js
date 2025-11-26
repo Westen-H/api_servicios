@@ -6,6 +6,7 @@
 
 // Impportar express para poder usar su sitema de enrutamiento y crear un router modular
 const express = require('express');
+// const { validateImputs } = require('../middleware/validateImputs)
 
 // Crear una instancia de router, que permite definir rutas separadas y organizadas
 const router = express.Router()

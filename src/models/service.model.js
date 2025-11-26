@@ -18,17 +18,77 @@ const mongoose = require('mongoose')
 // Desestructurar Types de mongoose para tipos de datos 
 const { Schema } = mongoose
 
-// Definir un esquema para los servicios ("Service")
+// Definir un esquema para el servicio de reserva ("Service")
 const serviceSchema = new mongoose.Schema(
     { 
         // Nombre del servicio, (requerido/obligatorio))
-        nombre: {type:String, required: true },
+        nombreCliente: { type:String, required: true },
 
+        emailCliente: { 
+            type:String, 
+            required: true,
+            match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email invalido"]
+        },
+
+        tipoHabitacion: { 
+            type:String, 
+            required: true,
+            enum: ['single', 'doble', 'familiar', 'suite']
+         },
+                
+        // 
+        adultos: { type:Number, required: true },
+        ninos: { type:Number, required: false, default: 0, min: 0 },
+        mascotas: { 
+            type:Number, 
+            required: false, 
+            default: 0, 
+            min: 0 },
+        // Tipo de mascotas, en un array por si se lleva más de una; gato + perro por ejemplo
+        mascotaDetalles: [
+            {
+                tipo: String,
+                tamamo: {
+                    type: String,
+                    enum: ['pequeño', 'mediano', 'grande'],
+                    required: false
+                }
+            }
+        ],
         // Precio del servicio, (requerido/obligatorio))
-        precio: { type: Number, required: true },
+        precioPorNoche: { type: Number, required: true, min: 0 },
+        // fecha de entrada y salida
+        fechaEntrada: { type:Date, required: true },
+        fechaSalida: { type:Date, required: true },
+        // num
+        numeroHabitacion: { type:Number, required: true },
+        // 
+        ubicacion: { type:String, required: true },
+        taxi: { 
+            type:String, 
+            enum: ['confirmado', 'no se precisa', 'cancelada'], default: 'no se precisa',
+            required: false },
+
+        alquilerCoche: { 
+            type:String, 
+            enum: ['confirmado', 'no se precisa', 'cancelada'], default: 'no se precisa', 
+            required: false },
+        
+        // 
+        estadoReserva: { 
+            type:String, 
+            required: true,
+            enum: ['confirmada', 'pendiente', 'cancelada'],
+            default: 'pendiente'
+        },
 
         // Descripcion opcional del servicio
-        descripcion: { type: String }
+        descripcion: { type: String },
+
+        precioTotal: {
+            type:Number,
+            default:0
+        }
      },
 
      {
@@ -42,3 +102,30 @@ const Services = mongoose.model('Service', serviceSchema)
 
 // Exportar el modelo para usarlo en otros archivos; ej.. controladores y rutas
 module.exports = Services
+
+
+
+
+/* Para postman:
+Copiar y cambiar datos para crear diferentes reservas
+{
+    "nombreCliente": "Jhon Doe",
+    "emailCliente": "Jhon.Doe@example.com",
+    "tipoHabitacion": "suite",
+    "adultos": "2",
+    "ninos": "1",
+    "mascotas": "1",
+    "mascotaDetalles": [{ "tipo": "perro", "tamano": "mediano" }],
+    "precioPorNoche": "120",
+    "fechaEntrada": "2025-12-01T00:00:00Z",
+    "fechaSalida": "2025-12-07T00:00:00Z",
+    "numeroHabitacion": "101",
+    "ubicacion": "Playa de roqueta de Mar",
+    "taxi": "confirmado",
+    "alquilerCoche": "no se precisa",
+    "estadoReserva": "pendiente",
+    "descripcion": "Reserva para vacaciones familiares",
+    "precioTotal": "720"
+}
+
+*/

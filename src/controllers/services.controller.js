@@ -27,7 +27,7 @@ const Service = require('../models/service.model');
     //     { id: 3, name: 'Reparación', price: 80 }
     // ]
 
-    // GET /api/v1/servicios
+    // GET /api/v1/service
 // Devolver todos los servicios alamacenados en MongoDB
 const getAllServices = async (req, res) => {
     try {
@@ -41,7 +41,7 @@ const getAllServices = async (req, res) => {
         res.status(500).json({ message: 'Error obteniendo servicios' })
     }
 }
-    // GET /api/v1/servicios/:id
+    // GET /api/v1/service/:id
 // Controlador que devuelve un solo servivio usando su ID
 const getServicesById = async (req, res) => {
 
@@ -66,7 +66,7 @@ const getServicesById = async (req, res) => {
     }
 }
 
-    // POST /api/v1/servicios
+    // POST /api/v1/service
 // Crear un nuevo servicio y guardarlo en MongoDB 
 const createService = async (req, res) => {
     try {
@@ -85,7 +85,7 @@ const createService = async (req, res) => {
     }
 } 
 
-    // PUT /api/v1/servicios/:id
+    // PUT /api/v1/service/:id
 // Controlador para ACTUALIZAR un servicio existente
 
 const updateService = async (req, res) => {
@@ -94,29 +94,27 @@ const updateService = async (req, res) => {
         const { id } = req.params
 
         // Buscar documento por ID y localizar "req.body" que tendría los campos que se quiera cambiar y "{ new:true }" hace que se devuelva el documento actualizado en la respuesta
-        const updateServices = await Service.findByIdAndUpdate(
-            id, // lo que se actualiza
-            req.body, // "Qué" actualizar 
+        const updateServicesId = await Service.findByIdAndUpdate(
+            id, // El ide del servicio, que se actualiza
+            req.body, // "Qué" campo a actualizar 
             { new: true } // devolver el documento actualizado en la respuesta
         )
         
         // Si no existe el servicio devolver un erro status 404 en formato json
-        if (!updateServices) {
-            return res.ststus(404).json({ message: 'servicio no encontrado' });
+        if (!updateServicesId) {
+            return res.status(404).json({ message: 'servicio no encontrado' });
         }
 
         // Si todo esta correcto enviar el servicio actualizado en formato JSON + msg
-        res.json(updateServices)
+        res.json(updateServicesId)
 
     } catch (error) {
         // Si pasa cualquier error; mal formato "id", datos invalidos et.. devolver error status 400 + msg
-        response.status(500).json({ message: 'Error actualizando servicio' });
-        error: error.message
-
+        res.status(500).json({ message: 'Error actualizando servicio' });
     }
 }
 
-    // DELETE /api/v1/servicios/:id
+    // DELETE /api/v1/service/:id
 // ELIMINAR un servicio por su id y devolver un mensaje de confirmación
 const deleteService = async (req, res) => {
     try {
