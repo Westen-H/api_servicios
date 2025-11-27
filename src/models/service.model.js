@@ -13,16 +13,18 @@
     });
 */
 // Importar mongoose para definir el esquemas y modelos de MongoDB
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
 // Desestructurar Types de mongoose para tipos de datos 
 const { Schema } = mongoose
 
 // Definir un esquema para el servicio de reserva ("Service")
-const serviceSchema = new mongoose.Schema(
-    { 
+const serviceSchema = new Schema({ 
         // Nombre del servicio, (requerido/obligatorio))
-        nombreCliente: { type:String, required: true },
+        nombreCliente: { 
+            type:String, 
+            required: true 
+        },
 
         emailCliente: { 
             type:String, 
@@ -35,15 +37,26 @@ const serviceSchema = new mongoose.Schema(
             required: true,
             enum: ['single', 'doble', 'familiar', 'suite']
          },
-                
-        // 
-        adultos: { type:Number, required: true },
-        ninos: { type:Number, required: false, default: 0, min: 0 },
+                         
+        adultos: { 
+            type:Number, 
+            required: true 
+        },
+
+        ninos: { 
+            type:Number, 
+            required: false, 
+            default: 0, 
+            min: 0 
+        },
+
         mascotas: { 
             type:Number, 
             required: false, 
             default: 0, 
-            min: 0 },
+            min: 0 
+        },
+
         // Tipo de mascotas, en un array por si se lleva más de una; gato + perro por ejemplo
         mascotaDetalles: [
             {
@@ -55,26 +68,45 @@ const serviceSchema = new mongoose.Schema(
                 }
             }
         ],
-        // Precio del servicio, (requerido/obligatorio))
-        precioPorNoche: { type: Number, required: true, min: 0 },
-        // fecha de entrada y salida
-        fechaEntrada: { type:Date, required: true },
-        fechaSalida: { type:Date, required: true },
-        // num
-        numeroHabitacion: { type:Number, required: true },
-        // 
-        ubicacion: { type:String, required: true },
+
+        precioPorNoche: { 
+            type: Number, 
+            required: true, 
+            min: 0 
+        },
+
+        fechaEntrada: { 
+            type:Date, 
+            required: true 
+        },
+
+        fechaSalida: { 
+            type:Date, 
+            required: true 
+        },
+
+        numeroHabitacion: { 
+            type:Number, 
+            required: true 
+        },
+
+        ubicacion: { 
+            type:String, 
+            required: true 
+        },
+
         taxi: { 
             type:String, 
-            enum: ['confirmado', 'no se precisa', 'cancelada'], default: 'no se precisa',
+            enum: ['confirmado', 'no se precisa', 'cancelada'], 
+            default: 'no se precisa',
             required: false },
 
         alquilerCoche: { 
             type:String, 
-            enum: ['confirmado', 'no se precisa', 'cancelada'], default: 'no se precisa', 
+            enum: ['confirmado', 'no se precisa', 'cancelada'], 
+            default: 'no se precisa', 
             required: false },
-        
-        // 
+
         estadoReserva: { 
             type:String, 
             required: true,
@@ -95,13 +127,13 @@ const serviceSchema = new mongoose.Schema(
         // crea/agrega automáticamente campos "createdAt" y "updatdAt"
         timestamps: true
      }
-)
+);
 
 // Crear el modelo "Servicio" a partir del esquema
-const Services = mongoose.model('Service', serviceSchema)
+const Services = mongoose.model('Service', serviceSchema);
 
 // Exportar el modelo para usarlo en otros archivos; ej.. controladores y rutas
-module.exports = Services
+export default Services;
 
 
 

@@ -5,47 +5,45 @@
 */
 
 // Impportar express para poder usar su sitema de enrutamiento y crear un router modular
-const express = require('express');
-// const { validateImputs } = require('../middleware/validateImputs)
+import express from 'express';
 
-// Crear una instancia de router, que permite definir rutas separadas y organizadas
-const router = express.Router()
-
-//  Importar los controladores que ejecutan/manejan la lógica de cara ruta
-const { 
+//  Importar los funciones/controladores que ejecutan/manejan la lógica de cada ruta
+import { 
     getAllServices,
     getServicesById,
     createService, 
     updateService,
     deleteService
- } = require('../controllers/services.controller');
+ } from '../controllers/services.controller.js';
 
- /*
-  ======================================
-  Rutas relacionadas con Services
-  Prefijo usado en server.js → /services
-  ======================================
-*/
+ // Importación de middlewares
+ import validateMongoId from "../middlewares/validateMongoId.js"; 
+ import validateImputs from "../middlewares/aunth.js";
+ import { createReservaValidator, reservaUpdateValidator } from "../validators/services.validators.js";
 
+// Crear una instancia de router, que permite definir rutas separadas y organizadas
+const router = express.Router();
+
+// Rutas
 // -> GET en /api/v1/services
-// Obtner la lista completa de servicios almacenados en la base de datos
+// Obtener la lista completa de servicios almacenados en la base de datos
 router.get('/', getAllServices);
 
-// -> GET /api/v1/servicios/:id
-// Obtner un único servicio según el "ID" proporcionado en la URL
-router.get('/:id', getServicesById);
+// -> GET /api/v1/services/:id
+// Obtener un único servicio según el "ID" proporcionado en la URL
+router.get('/:id', validateMongoId, getServicesById);
 
 // -> POST /api/v1/services
 // Crear un nuevo servicio en la base de datos
-router.post('/', createService);
+router.post('/', createReservaValidator, validateImputs, createService);
 
-// -> PUT /api/v1//servicios/:id
+// -> PUT /api/v1/services/:id
 // Actualizar un servicio existente según su ID
-router.put('/:id', updateService);
+router.put('/:id', validateMongoId, reservaUpdateValidator, validateImputs, updateService);
 
-// -> DELETE /api/v1//servicios/:id
+// -> DELETE /api/v1/services/:id
 // elimina un servicio existente según su ID
-router.delete('/:id', deleteService);
+router.delete('/:id', validateMongoId, deleteService);
 
 // Exportar el objeto router para que pueda ser utilizado en app.js
-module.exports = router
+export default router

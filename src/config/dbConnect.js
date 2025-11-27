@@ -3,8 +3,7 @@
 */
 
 // Importar libreria Mongoose, para facilitar la conexión y manejo de MongoDB
-const mongoose = require('mongoose')
-
+import mongoose from 'mongoose'
 
 // Función asincrona encargada de establecer conexión con MongoDB usando Mongoose como intermediario
 const connectDB = async () => {
@@ -14,11 +13,11 @@ const connectDB = async () => {
         console.log('🦇 Protocolo MongoDB conectado satisfactoriamente 🦇')
     } catch (error) {
         // Mensaje de error en consola, por si existe algun error y se detiene la ejecución del backend
-        console.error('Error conectando a MongoDB:', error.message)
+        console.error('❌ Error conectando al Protocolo MongoDB:', error.message)
         // Detener la ejecución de la app para evitar errores posteriores
         process.exit(1) 
     }
-}
+};
 
 // Exportar la función connectDB para poder usarla en otros archivos
-module.exports = connectDB
+export default connectDB 

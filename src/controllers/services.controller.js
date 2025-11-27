@@ -14,19 +14,12 @@
         // Creando el cerebro de los servicios
 
 // Importar el modelo de MongoDB para poder interactuar con la colección "services"
-const Service = require('../models/service.model');
+import Service from '../models/service.model.js';
 
 /* =======================================
     Controladores para la entidad Service                                   
  ======================================= */
-
-    // // Datos de prueba
-    // const services = [
-    //     { id: 1, name: 'Limpieza', price: 20 },
-    //     { id: 2, name: 'Mantenimiento', price: 50 },
-    //     { id: 3, name: 'Reparación', price: 80 }
-    // ]
-
+ 
     // GET /api/v1/service
 // Devolver todos los servicios alamacenados en MongoDB
 const getAllServices = async (req, res) => {
@@ -37,11 +30,10 @@ const getAllServices = async (req, res) => {
         // Devolver los servicios encontrados en formato JSON
         res.json(services)
     } catch (error) {
-        // Si ocurre un error en el servidor, se devuelve error: status 500 + msg
-        res.status(500).json({ message: 'Error obteniendo servicios' })
+        next(error)
     }
 }
-    // GET /api/v1/service/:id
+    // GET /api/v1/services/:id
 // Controlador que devuelve un solo servivio usando su ID
 const getServicesById = async (req, res) => {
 
@@ -60,32 +52,31 @@ const getServicesById = async (req, res) => {
         // Si la busqueda tiene éxito, devuelve como JSON el servicio encontrado
         res.json(service)
     } catch (error) {
-        // Error de servidor o "ID" invalído
-        console.error('Error obteniendo servicios', error.message)
-        res.status(500).json({ message: 'Error obteniendi servicios' })
+        next(error)
     }
 }
 
     // POST /api/v1/service
-// Crear un nuevo servicio y guardarlo en MongoDB 
+// Crear un nuevo servicio (de reserva) y guardarlo en MongoDB 
 const createService = async (req, res) => {
     try {
-        // extraer los campos enviados en el body de la petición
-        const { nombre, precio, descripcion } = req.body
+        // ver que llega all body desde postman
+        console.log('Este es el contenido que llega al BODY :', req.body);
 
-        // Crear un nuevo documento usando el modelo Service
-        const newService = await Service.create({ nombre, precio, descripcion })
+        // // extraer los campos enviados en el body de la petición
+        // const { nombre, precio, descripcion } = req.body
 
-        // Responder con un satatus 201 "cread0" y el servicio recién creado EN json
+        // Usar todo el body para crear el nuevo documento según el schema/modelo.
+        const newService = await Service.create(req.body)
+
+        // Responder con un satatus 201 "creado" y el servicio recién creado EN json
         res.status(201).json(newService)
     } catch (error) {
-        // Si hay error de validación mandar status 400 + msg
-        console.error('Error creando servicio:', error.message)
-        res.status(400).json({ message: 'Error creando servicio' })
+        next(error)
     }
 } 
 
-    // PUT /api/v1/service/:id
+    // PUT /api/v1/services/:id
 // Controlador para ACTUALIZAR un servicio existente
 
 const updateService = async (req, res) => {
@@ -109,39 +100,36 @@ const updateService = async (req, res) => {
         res.json(updateServicesId)
 
     } catch (error) {
-        // Si pasa cualquier error; mal formato "id", datos invalidos et.. devolver error status 400 + msg
-        res.status(500).json({ message: 'Error actualizando servicio' });
+        next(error)
     }
 }
 
-    // DELETE /api/v1/service/:id
+    // DELETE /api/v1/services/:id
 // ELIMINAR un servicio por su id y devolver un mensaje de confirmación
-const deleteService = async (req, res) => {
+const deleteService = async (req, res, next) => {
     try {
         // Extraer ID desde la URL
-        const { id } = req.params
+        const { id } = req.params;
 
         // Burcar y eliminar el doocumento con el ID solicitado en MongoDB
         const deleteService = await Service.findByIdAndDelete(id);
 
         // Si no existe un servicio con ese "id" devolver error 404 + msg en formato json
         if (!deleteService) {
-            return res.status(404).json({ message: 'Servicio no econtrado' })
+            return res.status(404).json({ message: 'Servicio no econtrado' });
         }
 
         // Si se elimina correctamente, enviar mensaje de ´exito, json:
-        res.json({ message: 'Servicio eliminado correctamente' });
+        return res.status(200).json({ message: 'Servicio eliminado correctamente' });
 
     } catch (error) {
-        // Error del servicio o del id en formato no valido
-        console.error('Error eliminando servicio;', error.message)
-        res.status(500).json({ menssaje: 'Error eliminando servicio' })
+        next(error)
     }
-}
+};
 
 
 // Exportar los controladores para que puedan ser usados en las rutas 
-module.exports = {
+export {
     getAllServices,
     getServicesById,
     createService,

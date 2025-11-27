@@ -1,8 +1,9 @@
 {
   "name": "api-servicios",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
-  "main": "src/appjs",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
@@ -15,7 +16,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Westen-H/api_servicios/issues"
   },
@@ -25,7 +25,8 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-validator": "^7.3.1",
-    "mongoose": "^9.0.0"
+    "mongoose": "^9.0.0",
+    "morgan": "^1.10.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

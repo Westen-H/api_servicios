@@ -2,13 +2,13 @@
 
 // ===== IMPORTACIÓN =====
 // Traemos validationResult de express-validator para capturar los errores de validación que definimos en las rutas antes de llegar al controlador
-const { validationResult } = require('express-validator')
+import { validationResult } from 'express-validator.js';
 
 
 // ===== CREACIÓN DEL MIDDLEWARE =====
 // Middleware de validación de inputs (datos de entrada)
 // Recibe req (request), res (response) y next (siguiente middleware)
-const validateInput = (req, res, next) => {
+const validateRequest = (req, res, next) => {
 
     // Recoger los errores que se puedan dar al validar los datos de la petición según las reglas definidas y que expres-validator registra
 
@@ -31,4 +31,4 @@ const validateInput = (req, res, next) => {
 // ===== EXPORTACIÓN =====
 // Exportamos el middleware para poder usarlo en nuestras rutas
 // Esto permite mantener el código modular y limpio
-module.exports = validateInput
+export { validateRequest }
