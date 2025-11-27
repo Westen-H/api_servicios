@@ -1,5 +1,18 @@
 // Middleware para proteger rutas verificando si el usuario tiene un token JWT válido
 
+// Insportaciones
+import express from 'express';
+
+const user = [
+  {
+    user: 'john',
+    password: 'passor1234admin',
+    role: 'admin'
+  }
+]
+
+
+
 // Middleware de ejemplo para proteger rutas
 const auth = (req, res, next) => {
   // Aquí hay que
