@@ -18,7 +18,7 @@ import {
 
  // Importación de middlewares
  import validateMongoId from "../middlewares/validateMongoId.js"; 
- import validateImputs from "../middlewares/aunth.js";
+ import validateImputs from "../middlewares/auth.js";
  import { createReservaValidator, reservaUpdateValidator } from "../validators/services.validators.js";
 
 // Crear una instancia de router, que permite definir rutas separadas y organizadas

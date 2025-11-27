@@ -1,8 +1,9 @@
 
 
 // Importaciones --> body y isDate: body es la función que permite validar campos que vienen en el body de la peticvión (POST,PUT) / is date es una función personalizada, para validadr si un valor es una fecha valida
-import body from "express-validator";
-import isDate from "../helpers/isDate";
+import { body } from "express-validator";
+
+import { isDate } from "../helpers/isDate.js";
 
 // Validaciones para crear un servicio(de reserva)
 const createReservaValidator = [
@@ -125,4 +126,5 @@ const createReservaValidator = [
 
 const reservaUpdateValidator = createReservaValidator.map(rule => rule.optional());
 
-export default {createReservaValidator, reservaUpdateValidator}
+export {createReservaValidator, reservaUpdateValidator}
+console.log("desde la carpeta validators/services.validators")

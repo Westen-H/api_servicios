@@ -12,9 +12,9 @@ registerUser, // --> manejar registro nuevo
 } from "../controllers/user.controller.js";
 
 // Importar middlewares
-import validateRequest from "../middlewares/validateRequest" // Middleware para revisar que los datos sean correctos
-import { registerValidators, loginValidators } from "../validators/user.validators" // Validaciones especificas ara cada rutas
-import auth from "../middlewares/auth" // Middleware para proteger rutas, viendo si el usuario tiene token JWT
+import { validateRequest } from "../middlewares/validateRequest.js" // Middleware para revisar que los datos sean correctos
+import { registerValidators, loginValidators } from "../validators/user.validators.js" // Validaciones especificas ara cada rutas
+import auth from "../middlewares/auth.js" // Middleware para proteger rutas, viendo si el usuario tiene token JWT
 
 // Heal check --> Ruta para test de Usuario + devolver info del usuario autenticado
 usersRouter.get('/', (req, res) => {

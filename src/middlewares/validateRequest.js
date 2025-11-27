@@ -2,7 +2,7 @@
 
 // ===== IMPORTACIÓN =====
 // Traemos validationResult de express-validator para capturar los errores de validación que definimos en las rutas antes de llegar al controlador
-import { validationResult } from 'express-validator.js';
+import { validationResult } from 'express-validator';
 
 
 // ===== CREACIÓN DEL MIDDLEWARE =====
