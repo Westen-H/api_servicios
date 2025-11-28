@@ -1,9 +1,9 @@
 /* 
-    Services.routes.js es el archivo se donde definen las rutas (URLs) y a qué controlador llaman estas rutas.
+    Services.routes.js es el archivo donde se definen las rutas (URLs) y a qué controlador llaman estas rutas.
         Es como una agenda: "Si el usuario va a "/services" → usar el controlador getServices"
         Ejemplo: router.get('/services', servicesController.getServices);
 */
-
+//((================== Importaciones ==================))\\
 // Impportar express para poder usar su sitema de enrutamiento y crear un router modular
 import express from 'express';
 
@@ -16,7 +16,7 @@ import {
     deleteService
  } from '../controllers/services.controller.js';
 
- // Importación de middlewares
+ //((================== Importaciones middlewares ==================))\\ 
  import validateMongoId from "../middlewares/validateMongoId.js"; 
  import validateImputs from "../middlewares/auth.js";
  import { createReservaValidator, reservaUpdateValidator } from "../validators/services.validators.js";
@@ -24,7 +24,7 @@ import {
 // Crear una instancia de router, que permite definir rutas separadas y organizadas
 const router = express.Router();
 
-// Rutas
+//((================== Rutas ==================))\\
 // -> GET en /api/v1/services
 // Obtener la lista completa de servicios almacenados en la base de datos
 router.get('/', getAllServices);

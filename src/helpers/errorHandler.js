@@ -4,7 +4,7 @@ const errorHandler = (err, req, res, next) => {
     console.error("❌ Error en el servidor: ", err);
 
     if (!res.headersSent) {
-        return res.satatus(500).json({
+        return res.status(500).json({
             message: "Error interno en el servidor"
         });
     }

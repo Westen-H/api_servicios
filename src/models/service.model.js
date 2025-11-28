@@ -32,6 +32,12 @@ const serviceSchema = new Schema({
             match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email invalido"]
         },
 
+        telefonoCliente: { 
+            type: String, 
+            required: false,
+            match: [/^\+?\d{9,15}$/, 'Número de teléfono inválido'] 
+        },
+
         tipoHabitacion: { 
             type:String, 
             required: true,

@@ -1,5 +1,5 @@
 // Definir rutas de autentificación de usuario.
-
+//((================== Importar middlewares ==================))\\
 //importaciónes y creación de router
 import express from 'express'; 
 const usersRouter = express.Router();// crear router modular para definir rutas separadas del app.js pricipal
@@ -11,7 +11,7 @@ registerUser, // --> manejar registro nuevo
     refreshToken, // --> renovar el token de autenticación
 } from "../controllers/user.controller.js";
 
-// Importar middlewares
+//((================== Importar middlewares ==================))\\
 import { validateRequest } from "../middlewares/validateRequest.js" // Middleware para revisar que los datos sean correctos
 import { registerValidators, loginValidators } from "../validators/user.validators.js" // Validaciones especificas ara cada rutas
 import auth from "../middlewares/auth.js" // Middleware para proteger rutas, viendo si el usuario tiene token JWT
@@ -24,7 +24,7 @@ usersRouter.get('/', (req, res) => {
     });
 });
 
-// Rutas de auth
+//((================== Rutas de auth ==================))\\
 usersRouter.post("/register", registerValidators, validateRequest, registerUser );
 usersRouter.post("/login", loginValidators, validateRequest, loginUser );
 usersRouter.get("/renew", auth, refreshToken );

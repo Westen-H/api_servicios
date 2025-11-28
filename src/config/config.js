@@ -16,7 +16,7 @@ const config = {
 
     // Configuración de seguridad
 
-    segurity: {
+    security: {
         // Para claves secretas. Importante: no valores por defecto
         secretKey: process.env.JWT_SECRET,
     },

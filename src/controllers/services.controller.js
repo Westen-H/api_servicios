@@ -20,9 +20,9 @@ import Service from '../models/service.model.js';
     Controladores para la entidad Service                                   
  ======================================= */
  
-    // GET /api/v1/service
+    // GET /api/v1/services
 // Devolver todos los servicios alamacenados en MongoDB
-const getAllServices = async (req, res) => {
+const getAllServices = async (req, res, next) => {
     try {
         // Usar find()--> busca todos los documentos en la colección 2services" 
         const services = await Service.find()
@@ -35,7 +35,7 @@ const getAllServices = async (req, res) => {
 }
     // GET /api/v1/services/:id
 // Controlador que devuelve un solo servivio usando su ID
-const getServicesById = async (req, res) => {
+const getServicesById = async (req, res, next) => {
 
     try {
         // Obtener el parámetro "ID" de la URL
@@ -56,9 +56,9 @@ const getServicesById = async (req, res) => {
     }
 }
 
-    // POST /api/v1/service
+    // POST /api/v1/services
 // Crear un nuevo servicio (de reserva) y guardarlo en MongoDB 
-const createService = async (req, res) => {
+const createService = async (req, res, next) => {
     try {
         // ver que llega all body desde postman
         console.log('Este es el contenido que llega al BODY :', req.body);
@@ -79,7 +79,7 @@ const createService = async (req, res) => {
     // PUT /api/v1/services/:id
 // Controlador para ACTUALIZAR un servicio existente
 
-const updateService = async (req, res) => {
+const updateService = async (req, res, next) => {
     try {
         // Extraer el ID que viene en la URL
         const { id } = req.params
