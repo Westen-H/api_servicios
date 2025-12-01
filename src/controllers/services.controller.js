@@ -11,15 +11,17 @@
     };
 */       
         
+//((================== Controladores para el recurso Services ==================))\\
         // Creando el cerebro de los servicios
 
 // Importar el modelo de MongoDB para poder interactuar con la colección "services"
 import Service from '../models/service.model.js';
+import { sendSuccess, sendError } from '../utils/apiResponse.js';
 
 /* =======================================
     Controladores para la entidad Service                                   
  ======================================= */
- 
+
     // GET /api/v1/services
 // Devolver todos los servicios alamacenados en MongoDB
 const getAllServices = async (req, res, next) => {
@@ -27,9 +29,10 @@ const getAllServices = async (req, res, next) => {
         // Usar find()--> busca todos los documentos en la colección 2services" 
         const services = await Service.find()
 
-        // Devolver los servicios encontrados en formato JSON
-        res.json(services)
+        // Devolver los servicios encontrados en formato JSON (centralizado en un herlper en utils)
+        return sendSuccess(res, 200, 'Lista de servicios', services);
     } catch (error) {
+        // Error con middleware global
         next(error)
     }
 }
@@ -49,8 +52,8 @@ const getServicesById = async (req, res, next) => {
             return res.status(404).json({ message: 'Servicio no encontrado' })
         };
 
-        // Si la busqueda tiene éxito, devuelve como JSON el servicio encontrado
-        res.json(service)
+        // Si la busqueda tiene éxito, devuelve como JSON el servicio encontrado 
+        return sendSuccess(res, 200, 'Servicio encontrado', service);
     } catch (error) {
         next(error)
     }
@@ -63,18 +66,32 @@ const createService = async (req, res, next) => {
         // ver que llega all body desde postman
         console.log('Este es el contenido que llega al BODY :', req.body);
 
-        // // extraer los campos enviados en el body de la petición
-        // const { nombre, precio, descripcion } = req.body
+if (!req.body || (Array.isArray(req.body) && req.body.length === 0)) {
+            return res.status(400).json({ message: 'No hay datos para crear el servicio' });
+        }
 
-        // Usar todo el body para crear el nuevo documento según el schema/modelo.
-        const newService = await Service.create(req.body)
+        console.log('Contenido recibido en BODY:', req.body);
 
-        // Responder con un satatus 201 "creado" y el servicio recién creado EN json
-        res.status(201).json(newService)
+        let newServices;
+
+        if (Array.isArray(req.body)) {
+            // Crear varios documentos
+            newServices = await Service.insertMany(req.body);
+        } else {
+            // Crear un solo documento
+            newServices = await Service.create(req.body);
+        }
+
+        // Responder con estado 201 y los servicios creados
+        return sendSuccess(res, 201, 'Servicio creado correctamente', newServices);
     } catch (error) {
-        next(error)
+        // Log de errores real para depuración
+        console.error('Error creando servicios:', error);
+
+        // Pasar el error al middleware de manejo de errores
+        next(error);
     }
-} 
+}; 
 
     // PUT /api/v1/services/:id
 // Controlador para ACTUALIZAR un servicio existente
@@ -82,22 +99,27 @@ const createService = async (req, res, next) => {
 const updateService = async (req, res, next) => {
     try {
         // Extraer el ID que viene en la URL
-        const { id } = req.params
+        const { id } = req.params;
 
         // Buscar documento por ID y localizar "req.body" que tendría los campos que se quiera cambiar y "{ new:true }" hace que se devuelva el documento actualizado en la respuesta
-        const updateServicesId = await Service.findByIdAndUpdate(
+        const updatedServicesId = await Service.findByIdAndUpdate(
             id, // El ide del servicio, que se actualiza
             req.body, // "Qué" campo a actualizar 
             { new: true } // devolver el documento actualizado en la respuesta
         )
         
         // Si no existe el servicio devolver un erro status 404 en formato json
-        if (!updateServicesId) {
+        if (!updatedServicesId) {
             return res.status(404).json({ message: 'servicio no encontrado' });
         }
 
         // Si todo esta correcto enviar el servicio actualizado en formato JSON + msg
-        res.json(updateServicesId)
+        return sendSuccess(
+            res, // objeto de respuesta de Express
+            200, // código HTTP de éxito
+            'Servicio actualizado correctamente',  // mensaje para el cliente
+            updatedServicesId // datos del servicio actualizado
+        );
 
     } catch (error) {
         next(error)
@@ -120,7 +142,7 @@ const deleteService = async (req, res, next) => {
         }
 
         // Si se elimina correctamente, enviar mensaje de ´exito, json:
-        return res.status(200).json({ message: 'Servicio eliminado correctamente' });
+        return sendSuccess(res, 200, 'Servicio eliminado correctamente', null); // null porque no hay datos adicio nales, ya que se elimina.
 
     } catch (error) {
         next(error)
@@ -136,3 +158,4 @@ export {
     updateService,
     deleteService
 }
+console.log("desde la carpeta controller/servicios.controller, todo funcion OK")

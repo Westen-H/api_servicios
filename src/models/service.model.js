@@ -41,7 +41,7 @@ const serviceSchema = new Schema({
         tipoHabitacion: { 
             type:String, 
             required: true,
-            enum: ['single', 'doble', 'familiar', 'suite']
+            enum: ['single', 'doble', 'familiar', 'suite', 'individual']
          },
                          
         adultos: { 
@@ -103,15 +103,17 @@ const serviceSchema = new Schema({
 
         taxi: { 
             type:String, 
-            enum: ['confirmado', 'no se precisa', 'cancelada'], 
+            enum: ['confirmado', 'no se precisa', 'no', 'cancelada'], 
             default: 'no se precisa',
-            required: false },
+            required: false 
+        },
 
         alquilerCoche: { 
             type:String, 
-            enum: ['confirmado', 'no se precisa', 'cancelada'], 
+            enum: ['confirmado', 'no se precisa', 'no', 'cancelada'], 
             default: 'no se precisa', 
-            required: false },
+            required: false 
+        },
 
         estadoReserva: { 
             type:String, 
@@ -140,7 +142,7 @@ const Services = mongoose.model('Service', serviceSchema);
 
 // Exportar el modelo para usarlo en otros archivos; ej.. controladores y rutas
 export default Services;
-
+console.log("desde la carpeta models/servicios.models, todo funcion OK")
 
 
 

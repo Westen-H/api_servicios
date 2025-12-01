@@ -127,4 +127,4 @@ const createReservaValidator = [
 const reservaUpdateValidator = createReservaValidator.map(rule => rule.optional());
 
 export {createReservaValidator, reservaUpdateValidator}
-console.log("desde la carpeta validators/services.validators")
+console.log("desde la carpeta validators/servicios.validators, todo funcion OK")

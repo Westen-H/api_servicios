@@ -35,7 +35,7 @@ app.use(morgan("dev"));
 //((======================== RUTAS de la API ========================))\\
 
 // Usar /services como prefijo: así que todas las rutas que comiencen con /services serán manejadas por Servicesroutes
-app.use('/api/v1/services', servicesRoutes)
+app.use('/api/v1/servicios', servicesRoutes)
 app.use('/api/v1/auth', userRouter)
 app.use('/api/v1/admin', adminRouter);  // Ruta para el área de administración: protegidas por roles
 
