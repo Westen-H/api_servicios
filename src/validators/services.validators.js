@@ -8,7 +8,7 @@ import { isDate } from "../helpers/isDate.js";
 // Validaciones para crear un servicio(de reserva)
 const createReservaValidator = [
     // Nombre del cliente
-    body("name")
+    body("nombreCliente")
         .trim()
         .notEmpty().withMessage("El nombre es obligatorio") 
         .isLength({ min: 3}).withMessage("El nombre debe tener almenos 3 caracteres"), 
